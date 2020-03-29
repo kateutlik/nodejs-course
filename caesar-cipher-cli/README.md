@@ -10,8 +10,8 @@ CLI tool accepts 4 options (short alias and full name):
 
 ## Installing and running application:
 ```bash
-$ git clone https://github.com/katerinautlik/nodejs-course-template.git
-$ cd nodejs-course-template
+$ git clone https://github.com/katerinautlik/nodejs-course.git
+$ cd nodejs-course
 $ npm i
 $ node caesar-cipher-cli/index.js -s <shift: is a number> -a <action: encode || decode> [-i <string: file name>] [-o <string: file name>]
 ```
