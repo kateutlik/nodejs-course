@@ -3,10 +3,12 @@
 CLI tool that encodes and decodes a text by Caesar cipher.
 
 CLI tool accepts 4 options (short alias and full name):  
+```bash
 -s, --shift: a shift  
 -i, --input: an input file  
 [-o, --output]: an output file  
 [-a, --action]: an action encode/decode
+```
 
 ## Installing and running application:
 ```bash
