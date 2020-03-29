@@ -1,0 +1,9 @@
+module.exports = {
+  UPPER_CASE_REGEX: /[A-Z]/,
+  LOWER_CASE_REGEX: /[a-z]/,
+  LETTERS_NUMBER: 26,
+  UPPER_CASE_FIRST_CHAR_CODE: 65,
+  LOWER_CASE_FIRST_CHAR_CODE: 97,
+  ENCODE_ACTION: 'encode',
+  DECODE_ACTION: 'decode'
+};
