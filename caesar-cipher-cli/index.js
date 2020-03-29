@@ -17,6 +17,10 @@ program
 
 const { action, shift, input, output } = program;
 
+if (typeof action === 'function') {
+  validate.action();
+}
+
 pipeline(
   stream.inputStream(input),
   stream.transformStream(action, shift),

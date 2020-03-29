@@ -39,6 +39,10 @@ module.exports = {
     throwError(MESSAGES.SHIFT_ERROR, 1);
   },
   action: value => {
+    if (!value) {
+      throwError(MESSAGES.ACTION_ERROR_REQUIRED, 1);
+    }
+
     if (isActionValid(value)) {
       return value;
     }
