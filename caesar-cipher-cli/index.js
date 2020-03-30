@@ -1,8 +1,8 @@
 const { program } = require('commander');
-const stream = require('./stream');
+const stream = require('./service/stream-service');
 const { pipeline } = require('stream');
-const validate = require('./validate');
-const MESSAGES = require('./messages');
+const validate = require('./service/validate-service');
+const MESSAGES = require('./const/messages');
 
 program
   .requiredOption(
