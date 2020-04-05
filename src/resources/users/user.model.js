@@ -1,4 +1,5 @@
 const uuid = require('uuid');
+const UserRepo = require('./user.memory.repository');
 
 class User {
   constructor({
@@ -19,4 +20,24 @@ class User {
   }
 }
 
-module.exports = User;
+exports.list = async () => {
+  return (await UserRepo.list()).map(User.toResponse);
+};
+
+exports.getById = async id => {
+  return User.toResponse(await UserRepo.getById(id));
+};
+
+exports.create = async userData => {
+  const user = new User({ ...userData });
+  return User.toResponse(await UserRepo.create(user));
+};
+
+exports.putById = async (id, userData) => {
+  const user = new User({ id, ...userData });
+  return User.toResponse(await UserRepo.updateById(id, user));
+};
+
+exports.deleteById = async id => {
+  return (await UserRepo.deleteById(id)).map(User.toResponse);
+};

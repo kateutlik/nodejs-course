@@ -1,4 +1,4 @@
-const data = [
+let users = [
   {
     id: '1',
     name: 'Anna',
@@ -13,28 +13,35 @@ const data = [
   }
 ];
 
-const getAll = async () => {
-  return data;
+const getLastIndex = () => users.length - 1;
+const getLastItem = () => users[getLastIndex()];
+const getIndexById = id => users.findIndex(checkId.bind(this, id));
+const checkId = (id, item) => item.id === id;
+const setUsers = data => (users = data);
+
+const getUpdatedUsers = item => {
+  return users.map(user =>
+    checkId(item.id, user) ? { ...user, ...item } : user
+  );
 };
+
+const list = async () => users;
+const getById = async id => users.find(checkId.bind(this, id));
 
 const create = async item => {
-  data.push(item);
-  return item;
-};
-
-const getById = async id => {
-  return data.find(user => user.id === id);
+  setUsers([...users, item]);
+  return getLastItem();
 };
 
 const updateById = async (id, item) => {
-  const index = data.findIndex(user => user.id === id);
-  data[index] = { ...data[index], ...item };
-  return data[index];
+  const index = getIndexById(id);
+  setUsers(getUpdatedUsers(item));
+  return users[index];
 };
 
 const deleteById = async id => {
-  const index = data.findIndex(user => user.id === id);
-  return index > -1 ? data.splice(index, 1) : {};
+  const index = getIndexById(id);
+  return index > -1 ? users.slice(index, 1) : [];
 };
 
-module.exports = { getAll, getById, create, updateById, deleteById };
+module.exports = { list, getById, create, updateById, deleteById };
