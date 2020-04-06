@@ -6,16 +6,16 @@ export class Task implements ITask {
   public title: string;
   public order: number;
   public description: string;
-  public userId: null | string;
+  public userId: string | null;
   public boardId: string;
   public columnId: null | string;
 
   constructor({
-    id = uuid.v1(),
+    id = uuid.v4(),
     title = 'Task 1',
     order = 0,
     description = 'Description',
-    userId = null,
+    userId = '',
     boardId = '',
     columnId = null
   } = {}) {
@@ -23,7 +23,7 @@ export class Task implements ITask {
     this.title = title;
     this.order = order;
     this.description = description;
-    this.userId = userId;
+    this.userId = userId || null;
     this.boardId = boardId;
     this.columnId = columnId;
   }

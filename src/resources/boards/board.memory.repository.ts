@@ -1,26 +1,7 @@
 import { IBoard } from './board.interface';
 import { BoardDataMapper } from './board.data.mapper';
 
-let boards: IBoard[] = [
-  {
-    id: '1',
-    title: 'title 1',
-    columns: [{
-      id: '1',
-      title: 'column 1',
-      order: 0,
-    }]
-  },
-  {
-    id: '2',
-    title: 'title 2',
-    columns: [{
-      id: '2',
-      title: 'column 2',
-      order: 0,
-    }]
-  },
-];
+let boards: IBoard[] = [];
 
 export class BoardRepository {
   private getLastIndex = () => boards.length - 1;

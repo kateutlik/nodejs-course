@@ -1,6 +1,7 @@
 import userRepository from './user.memory.repository';
 import { IUser, IUserBody, IUserDomain } from './user.interface';
 import { User } from './user.model';
+import taskRepository from '../tasks/task.memory.repository';
 
 // TODO Add Event Dispatcher
 // TODO Replace console.info with Logger
@@ -39,8 +40,15 @@ export class UserService {
     return userRepository.updateById(id, user);
   }
 
-  public delete(id: string): Promise<IUserDomain | undefined> {
+  public async delete(id: string): Promise<IUserDomain | undefined> {
     console.info('Delete a user');
+    const tasks = await taskRepository.find();
+    tasks.map(async task => {
+      if (task.userId === id) {
+        task.userId = null;
+        await taskRepository.updateById(task.id, task.boardId, task);
+      }
+    });
     return userRepository.deleteById(id);
   }
 }

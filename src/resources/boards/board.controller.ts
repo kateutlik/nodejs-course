@@ -19,7 +19,11 @@ class BoardController {
   public async find(req: Request, res: Response): Promise<void> {
     try {
       const boards = await boardService.find();
-      res.status(httpStatus.OK).json(boards);
+      if (boards && boards.length) {
+        res.status(httpStatus.OK).json(boards);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARDS_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARDS_NOT_FOUND);
     }
@@ -28,7 +32,11 @@ class BoardController {
   public async findById(req: Request, res: Response): Promise<void> {
     try {
       const board = await boardService.findById(req.params.id);
-      res.status(httpStatus.OK).json(board);
+      if (board) {
+        res.status(httpStatus.OK).json(board);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
     }
@@ -37,18 +45,26 @@ class BoardController {
   public async create(req: Request, res: Response): Promise<void> {
     try {
       const board = await boardService.create(req.body);
-      res.status(httpStatus.OK).json(board);
+      console.info(board);
+      if (board) {
+        res.status(httpStatus.OK).json(board);
+      } else {
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(MESSAGES.BOARD_NOT_CREATED);
+      }
     } catch (e) {
-      res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json(MESSAGES.BOARD_NOT_CREATED);
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).json(MESSAGES.BOARD_NOT_CREATED);
     }
   }
 
   public async update(req: Request, res: Response): Promise<void> {
     try {
       const board = await boardService.update(req.params.id, req.body);
-      res.status(httpStatus.OK).json(board);
+      console.info(board);
+      if (board) {
+        res.status(httpStatus.OK).json(board);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
     }
@@ -57,8 +73,12 @@ class BoardController {
   public async delete(req: Request, res: Response): Promise<void> {
     try {
       const board = await boardService.delete(req.params.id);
-      if (!board) res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
-      res.status(httpStatus.OK).json(board);
+      console.info(board);
+      if (board) {
+        res.status(httpStatus.OK).json(board);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.BOARD_NOT_FOUND);
     }

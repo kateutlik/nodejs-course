@@ -17,9 +17,9 @@ export class TaskService {
     return TaskService.instance;
   }
 
-  public find(): Promise<ITask[]> {
+  public findByBoardId(boardId: string): Promise<ITask[]> {
     console.info('Find all tasks');
-    return taskRepository.find();
+    return taskRepository.findByBoardId(boardId);
   }
 
   public findById(id: string, boardId: string): Promise<ITask | undefined> {
@@ -29,17 +29,25 @@ export class TaskService {
 
   public create(boardId: string, body: ITaskBody): Promise<ITask> {
     const task = new Task({
+      boardId: boardId,
+      userId: body.userId!,
       title: body.title,
       order: body.order,
-      description: body.description,
-      boardId: boardId
+      description: body.description
     });
     console.info('Create a new task => ', task.toString());
     return taskRepository.save(task);
   }
 
   public update(id: string, boardId: string, body: ITaskBody): Promise<ITask> {
-    const task = new Task({id, boardId, title: body.title, order: body.order, description: body.description});
+    const task = new Task({
+      id,
+      boardId,
+      userId: body.userId!,
+      title: body.title,
+      order: body.order,
+      description: body.description
+    });
     console.info('Update a task');
     return taskRepository.updateById(id, boardId, task);
   }

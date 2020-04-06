@@ -19,7 +19,11 @@ class UserController {
   public async find(req: Request, res: Response): Promise<void> {
     try {
       const users = await userService.find();
-      res.status(httpStatus.OK).json(users);
+      if (users) {
+        res.status(httpStatus.OK).json(users);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.USERS_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.USERS_NOT_FOUND);
     }
@@ -28,7 +32,11 @@ class UserController {
   public async findById(req: Request, res: Response): Promise<void> {
     try {
       const user = await userService.findById(req.params.id);
-      res.status(httpStatus.OK).json(user);
+      if (user) {
+        res.status(httpStatus.OK).json(user);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
     }
@@ -37,18 +45,26 @@ class UserController {
   public async create(req: Request, res: Response): Promise<void> {
     try {
       const user = await userService.create(req.body);
-      res.status(httpStatus.OK).json(user);
+      console.log(user);
+      if (user) {
+        res.status(httpStatus.OK).json(user);
+      } else {
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(MESSAGES.USER_NOT_CREATED);
+      }
     } catch (e) {
-      res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json(MESSAGES.USER_NOT_CREATED);
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).json(MESSAGES.USER_NOT_CREATED);
     }
   }
 
   public async update(req: Request, res: Response): Promise<void> {
     try {
       const user = await userService.update(req.params.id, req.body);
-      res.status(httpStatus.OK).json(user);
+      console.log(user);
+      if (user) {
+        res.status(httpStatus.OK).json(user);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
     }
@@ -57,8 +73,12 @@ class UserController {
   public async delete(req: Request, res: Response): Promise<void> {
     try {
       const user = await userService.delete(req.params.id);
-      if (!user) res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
-      res.status(httpStatus.OK).json(user);
+      console.log(user);
+      if (user) {
+        res.status(httpStatus.OK).json(user);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.USER_NOT_FOUND);
     }

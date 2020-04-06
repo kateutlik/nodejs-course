@@ -8,7 +8,7 @@ export class User implements IUser {
   public password: string;
 
   constructor({
-    id = uuid.v1(),
+    id = uuid.v4(),
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'

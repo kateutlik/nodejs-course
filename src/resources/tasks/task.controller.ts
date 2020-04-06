@@ -18,8 +18,12 @@ class TaskController {
 
   public async find(req: Request, res: Response): Promise<void> {
     try {
-      const tasks = await taskService.find();
-      res.status(httpStatus.OK).json(tasks);
+      const tasks = await taskService.findByBoardId(req.params.boardId);
+      if (tasks && tasks.length) {
+        res.status(httpStatus.OK).json(tasks);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASKS_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASKS_NOT_FOUND);
     }
@@ -28,7 +32,11 @@ class TaskController {
   public async findById(req: Request, res: Response): Promise<void> {
     try {
       const task = await taskService.findById(req.params.id, req.params.boardId);
-      res.status(httpStatus.OK).json(task);
+      if (task) {
+        res.status(httpStatus.OK).json(task);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
     }
@@ -36,20 +44,27 @@ class TaskController {
 
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      console.log(req.params);
       const task = await taskService.create(req.params.boardId, req.body);
-      res.status(httpStatus.OK).json(task);
+      console.info(task);
+      if (task) {
+        res.status(httpStatus.OK).json(task);
+      } else {
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(MESSAGES.TASK_NOT_CREATED);
+      }
     } catch (e) {
-      res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json(MESSAGES.TASK_NOT_CREATED);
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).json(MESSAGES.TASK_NOT_CREATED);
     }
   }
 
   public async update(req: Request, res: Response): Promise<void> {
     try {
       const task = await taskService.update(req.params.id, req.params.boardId, req.body);
-      res.status(httpStatus.OK).json(task);
+      console.info(task);
+      if (task) {
+        res.status(httpStatus.OK).json(task);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
     }
@@ -58,9 +73,12 @@ class TaskController {
   public async delete(req: Request, res: Response): Promise<void> {
     try {
       const task = await taskService.delete(req.params.id, req.params.boardId);
-      console.log(task)
-      if (!task) res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
-      res.status(httpStatus.OK).json(task);
+      console.log(task);
+      if (task) {
+        res.status(httpStatus.OK).json(task);
+      } else {
+        res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
+      }
     } catch (e) {
       res.status(httpStatus.NOT_FOUND).json(MESSAGES.TASK_NOT_FOUND);
     }

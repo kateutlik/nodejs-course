@@ -1,19 +1,6 @@
 import { IUser, IUserDomain } from './user.interface';
 import { UserDataMapper } from './user.data.mapper';
-let users: IUser[] = [
-  {
-    id: '1',
-    name: 'Anna',
-    login: 'anna',
-    password: 'p@ssword'
-  },
-  {
-    id: '2',
-    name: 'Bella',
-    login: 'bella',
-    password: 'p@ssword'
-  }
-];
+let users: IUser[] = [];
 
 export class UserRepository {
   private getLastIndex = () => users.length - 1;

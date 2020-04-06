@@ -2,7 +2,7 @@ export interface ITaskBody {
   title: string
   order: number
   description: string
-  userId: null | string
+  userId: string | null
   boardId: string
   columnId: null | string
 }

@@ -1,31 +1,13 @@
 import { ITask } from './task.interface';
 import { TaskDataMapper } from './task.data.mapper';
-let tasks: ITask[] = [
-  {
-    id: '1',
-    title: 'Task 1',
-    order: 0,
-    description: 'Description',
-    userId: '1',
-    boardId: '1',
-    columnId: '1',
-  },
-  {
-    id: '2',
-    title: 'Task 2',
-    order: 0,
-    description: 'Description',
-    userId: '2',
-    boardId: '2',
-    columnId: '2',
-  }
-];
+let tasks: ITask[] = [];
 
 export class TaskRepository {
   private getLastIndex = () => tasks.length - 1;
   private getLastItem = () => tasks[this.getLastIndex()];
   private getIndexById = (id: string, boardId: string) => tasks.findIndex(this.isEqualById.bind(null, id, boardId));
   private isEqualById = (id: string, boardId: string, item: ITask) => item.id === id && item.boardId === boardId;
+  private isEqualByBoardId = (boardId: string, item: ITask) => item.boardId === boardId;
   private isNotEqualById = (id: string, boardId: string, item: ITask) => item.id !== id && item.boardId === item.boardId;
   private setData = (data: ITask[]) => {
     tasks = data;
@@ -38,8 +20,15 @@ export class TaskRepository {
   };
 
   public async find(): Promise<ITask[]> {
-    return tasks.map((task) => TaskDataMapper.toDomain(task));;
+    return tasks.map((task) => TaskDataMapper.toDomain(task));
   }
+
+  public async findByBoardId(boardId: string): Promise<ITask[]> {
+    return tasks
+      .filter(this.isEqualByBoardId.bind(null, boardId))
+      .map((task) => TaskDataMapper.toDomain(task));
+  }
+
   public async findById(id: string, boardId: string): Promise<ITask | undefined> {
     const task = tasks.find(this.isEqualById.bind(null, id, boardId));
     return task ? TaskDataMapper.toDomain(task) : undefined;

@@ -8,7 +8,7 @@ export class Board implements IBoard {
   public columns: IColumn[];
 
   constructor({
-    id = uuid.v1(),
+    id = uuid.v4(),
     title = 'Board title',
     columns = []
   } = {}) {
