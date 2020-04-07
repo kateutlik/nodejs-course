@@ -25,7 +25,7 @@ export class Task implements ITask {
     this.description = description;
     this.userId = userId || null;
     this.boardId = boardId;
-    this.columnId = columnId;
+    this.columnId = columnId || null;
   }
 
   public toString(): string {
