@@ -3,9 +3,6 @@ import { IUser, IUserBody, IUserDomain } from './user.interface';
 import { User } from './user.model';
 import taskRepository from '../tasks/task.memory.repository';
 
-// TODO Add Event Dispatcher
-// TODO Replace console.info with Logger
-
 export class UserService {
   private static instance: UserService;
 

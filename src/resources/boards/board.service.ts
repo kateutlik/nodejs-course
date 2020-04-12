@@ -3,9 +3,6 @@ import taskRepository from '../tasks/task.memory.repository';
 import { IBoard, IBoardBody } from './board.interface';
 import { Board } from './board.model';
 
-// TODO Add Event Dispatcher
-// TODO Replace console.info with Logger
-
 export class BoardService {
   private static instance: BoardService;
 

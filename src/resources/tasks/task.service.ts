@@ -2,9 +2,6 @@ import taskRepository from './task.memory.repository';
 import { ITask, ITaskBody } from './task.interface';
 import { Task } from './task.model';
 
-// TODO Add Event Dispatcher
-// TODO Replace console.info with Logger
-
 export class TaskService {
   private static instance: TaskService;
 
